@@ -35,35 +35,40 @@ function Menu({ children, items, onchange = defaultFn }) {
     };
 
     return (
-        <Tippy
-            placement="bottom-end"
-            offset={[12, 8]}
-            delay={[0, 700]}
-            interactive="true"
-            render={(attrs) => (
-                <div className={cx('menu-lists')} tabIndex="-1" {...attrs}>
-                    <PopperWrapper className={cx('menu-popper')}>
-                        <ul className={cx('menu-items')}>
-                            {history.length > 1 && (
-                                <Header
-                                    title="Language"
-                                    onBack={() => {
-                                        setHistory((prev) => prev.slice(0, prev.length - 1));
-                                    }}
-                                />
-                            )}
-                            {renderItems()}
-                        </ul>
-                    </PopperWrapper>
-                </div>
-            )}
-            onHide={() => {
-                //back khi hover vẫn lại bằng menu đầu
-                return setHistory((prev) => prev.slice(0, 1));
-            }}
-        >
-            {children}
-        </Tippy>
+        //Using a wrapper <div> or <span> tag around the reference element solves this by 
+        //creating a new parentNode context. (lý do phải bọc div)
+        <div>
+            <Tippy
+                placement="bottom-end"
+                offset={[12, 8]}
+                delay={[0, 700]}
+                interactive="true"
+                render={(attrs) => (
+                    <div className={cx('menu-lists')} tabIndex="-1" {...attrs}>
+                        <PopperWrapper className={cx('menu-popper')}>
+                            <ul className={cx('menu-items')}>
+                                {history.length > 1 && (
+                                    <Header
+                                        title="Language"
+                                        onBack={() => {
+                                            setHistory((prev) => prev.slice(0, prev.length - 1));
+                                        }}
+                                    />
+                                )}
+                                <p className={cx('menu-body')}>{renderItems()}</p>
+                            </ul>
+                        </PopperWrapper>
+                    </div>
+                )}
+                onHide={() => {
+                    //back khi hover vẫn lại bằng menu đầu
+                    return setHistory((prev) => prev.slice(0, 1));
+                }}
+                hideOnClick="false" //click vào không ẩn
+            >
+                {children}
+            </Tippy>
+        </div>
     );
 }
 

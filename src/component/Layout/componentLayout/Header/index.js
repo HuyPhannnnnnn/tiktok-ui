@@ -1,35 +1,33 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-    faCircleQuestion,
-    faCircleXmark,
-    faCoins,
-    faEarthAmericas,
-    faEllipsisVertical,
-    faGear,
-    faInbox,
-    faKeyboard,
-    faPaperPlane,
-    faPlus,
-    faRightFromBracket,
-    faUser,
-} from '@fortawesome/free-solid-svg-icons';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsisVertical, faPlus } from '@fortawesome/free-solid-svg-icons';
 
-import { useEffect, useState } from 'react';
-import { Wrraper as PopperWrapper } from '../../../Popper';
-import AcountItem from '../../../AcountItem';
 import Button from '../../../Button';
 import Menu from '../../../Popper/Menu';
+import Image from '../../../images';
+import Search from '../Search';
 
 import Tippy from '@tippyjs/react';
-import HeadlessTippy from '@tippyjs/react/headless';
 import 'tippy.js/dist/tippy.css';
+
+import { Link } from 'react-router-dom';
+import configRoutes from '../../../../routes/configRoutes';
 
 import classNames from 'classnames/bind';
 import styles from './Header.module.scss';
 import images from '../../../../assets/images';
-import { faViadeo } from '@fortawesome/free-brands-svg-icons';
+
+import {
+    IconMessage,
+    IconInbox,
+    IconProfile,
+    IconCoin,
+    IconLive,
+    IconSetting,
+    IconLanguage,
+    Feedbackk,
+    IconKeyboard,
+    IconLogut,
+} from '../../../icons';
 
 //ctr+shift+L:để cop hết các chữ
 const cx = classNames.bind(styles);
@@ -37,17 +35,19 @@ const cx = classNames.bind(styles);
 //Mảng MENU
 const MENU_ITEMS = [
     {
-        icon: <FontAwesomeIcon icon={faEarthAmericas} />,
+        icon: <IconLanguage />,
         title: 'English',
         children: {
             title: 'Language',
             data: [
                 {
+                    icon: <IconLanguage />,
                     type: 'language',
                     code: 'en',
                     title: 'English',
                 },
                 {
+                    icon: <IconLanguage />,
                     type: 'language',
                     code: 'vi',
                     title: 'Tiếng Việt',
@@ -56,12 +56,12 @@ const MENU_ITEMS = [
         },
     },
     {
-        icon: <FontAwesomeIcon icon={faCircleQuestion} />,
+        icon: <Feedbackk />,
         title: 'Feedback and help',
         to: '/feedback',
     },
     {
-        icon: <FontAwesomeIcon icon={faKeyboard} />,
+        icon: <IconKeyboard />,
         title: 'Keyboard shortcuts',
     },
 ];
@@ -72,42 +72,33 @@ const currentUser = true;
 //mảng phần user menu
 const userMenu = [
     {
-        icon: <FontAwesomeIcon icon={faUser} />,
+        icon: <IconProfile />,
         title: 'View profile',
         to: '/@hoa',
     },
     {
-        icon: <FontAwesomeIcon icon={faCoins} />,
+        icon: <IconCoin />,
         title: 'Get Coins',
         to: '/coin',
     },
     {
-        icon: <FontAwesomeIcon icon={faViadeo} />,
+        icon: <IconLive />,
         title: 'Live Studio',
     },
     {
-        icon: <FontAwesomeIcon icon={faGear} />,
+        icon: <IconSetting />,
         title: 'Setting',
         to: '/setting',
     },
     ...MENU_ITEMS,
     {
-        icon: <FontAwesomeIcon icon={faRightFromBracket} />,
+        icon: <IconLogut />,
         title: 'Log out',
         seperate: true,
     },
 ];
 
 function Header() {
-    //logic result
-    const [searchResult, setSearchResult] = useState([]);
-
-    useEffect(() => {
-        setTimeout(() => {
-            setSearchResult([]);
-        }, 1000);
-    }, []);
-
     //haddle(props:menuitem sẽ truyền về chính object của nó)
     const handleMenuchange = (menuItem) => {
         switch (menuItem.type) {
@@ -122,66 +113,56 @@ function Header() {
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
                 <div className={cx('logo')}>
-                    <img src={images.logo} alt="Tiktok"></img>
+                    <Link to={configRoutes.home} className={cx('logo-link')}>
+                        <Image src={images.logo} alt="Tiktok"></Image>
+                    </Link>
                 </div>
-                <HeadlessTippy
-                    visible={searchResult.length > 0} //mảng tìm kiếm phải lớn > 0 mới chạy
-                    interactive="true"
-                    render={(attrs) => (
-                        <div className={cx('search-result')} tabIndex="-1" {...attrs}>
-                            <PopperWrapper>
-                                <h4 className={cx('search-title')}>Acounts</h4>
-                                <AcountItem />
-                                <AcountItem />
-                                <AcountItem />
-                            </PopperWrapper>
-                        </div>
-                    )}
-                >
-                    <div className={cx('search')}>
-                        <input placeholder="Search acounts and videos" spellCheck={false} />
 
-                        <button className={cx('check')}>
-                            <FontAwesomeIcon icon={faCircleXmark} />
-                        </button>
-                        <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />
+                <Search />
 
-                        <button className={cx('search-btn')}>
-                            <FontAwesomeIcon icon={faMagnifyingGlass} />
-                        </button>
-                    </div>
-                </HeadlessTippy>
                 <div className={cx('action')}>
                     {currentUser ? (
                         <>
-                            <Button text>
+                            <Button lock to={'/upload'}>
                                 <FontAwesomeIcon className={cx('plus')} icon={faPlus} />
                                 <span className={cx('upload')}>Upload</span>
                             </Button>
+
                             <Tippy delay={[0, 200]} content="Messages">
                                 <button className={cx('action-btn')}>
-                                    <FontAwesomeIcon icon={faPaperPlane} />
+                                    <IconMessage />
                                 </button>
                             </Tippy>
                             <Tippy delay={[0, 200]} content="inbox">
                                 <button className={cx('action-btn')}>
-                                    <FontAwesomeIcon icon={faInbox} />
+                                    <IconInbox />
+                                    <span className={cx('badge')}>1</span>
                                 </button>
                             </Tippy>
                         </>
                     ) : (
                         <>
-                            <Button text>
+                            <Button lock to={'/login'}>
                                 <FontAwesomeIcon className={cx('plus')} icon={faPlus} />
                                 <span className={cx('upload')}>Upload</span>
                             </Button>
-                            <Button primary>Log in</Button>
+                            <Button primarytwo to={'/login'}>
+                                Log in
+                            </Button>
                         </>
                     )}
                     <Menu items={currentUser ? userMenu : MENU_ITEMS} onchange={handleMenuchange}>
                         {currentUser ? (
                             <div className={cx('userr-avartar')}>
-                                <img className={cx('user-avartar')} src={images.photo} alt="Daolephuonghoa"></img>
+                                <Image
+                                    className={cx('user-avartar')}
+                                    src={images.photo}
+                                    alt="Daolephuonghoa"
+                                    fallback={
+                                        //ảnh cutom khi ảnh chính bị lỗi mà ko muốn dùng ảnh lỗi mặc định
+                                        'https://p16-sign-va.tiktokcdn.com/tos-useast2a-avt-0068-giso/a6fc69440ecd6e4e86b8ef977e75c1c0~c5_100x100.jpeg?x-expires=1672560000&x-signature=OBLkVgcV2nZVIp6Ute8vhfPvksE%3D'
+                                    }
+                                ></Image>
                             </div>
                         ) : (
                             <button className={cx('more-btn')}>

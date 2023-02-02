@@ -6,6 +6,12 @@
     justify-content: center;
     display: inline-flex;
     align-items: center;
+    background-color: white;
+
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 10;
 }
 
 .inner {
@@ -17,92 +23,11 @@
     padding: var(--default-layout-horizontal-spacer);
 }
 
-.search,
-.search-result {
-    width: 361px;
-}
-
-.search {
-    --search-border-radius: 92px;
-    --search-height: 46px;
-    --search-top: 9px;
-    --search-button-width: 52px;
-
-    height: var(--search-height);
-    background-color: rgba(22, 24, 35, 0.06);
-    border-radius: var(--search-border-radius);
-    padding-left: 16px;
+.logo-link {
     display: flex;
-    position: relative;
-    //lỗi bị dực dực
-    border: 1.5px solid transparent;
-
-    input {
-        flex: 1;
-        height: 100%;
-        color: var(--black);
-        font-size: 1.6rem;
-        background: transparent; //tròng suốt
-        line-height: 22px;
-        caret-color: var(--primary); //search chạy theo
-    }
-
-    //gõ chữ kính lúp đổi màu
-    input:not(:placeholder-shown) ~ .search-btn {
-        color: rgba(22, 24, 35, 0.75);
-    }
-
-    &::after {
-        content: '';
-        position: relative;
-        top: var(--search-top);
-        right: var(--search-button-width);
-        height: calc(var(--search-height) - var(--search-top) * 2);
-        width: 1px;
-        background-color: rgba(22, 24, 35, 0.34);
-    }
-
-    &:focus-within {
-        border-color: rgba(22, 24, 35, 0.34);
-    }
 }
 
-.check,
-.loading {
-    position: absolute;
-    right: calc(var(--search-button-width) + 16px);
-    top: 50%;
-    //canh giữa
-    transform: translateY(-50%);
-}
-
-.search-btn {
-    width: 52px;
-    height: 100%;
-    border-top-right-radius: var(--search-border-radius);
-    border-bottom-right-radius: var(--search-border-radius);
-    font-size: 1.8rem;
-    color: rgba(22, 24, 35, 0.34);
-
-    &:hover {
-        cursor: pointer;
-        background: rgba(22, 24, 35, 0.03);
-    }
-
-    &:active {
-        background: rgba(22, 24, 35, 0.06);
-    }
-}
-
-.search-title {
-    height: 30px;
-    padding: 5px 12px;
-    font-size: 14px;
-    line-height: 20px;
-    font-weight: 600;
-    color: rgba(22, 24, 35, 0.5);
-}
-
+//action
 .action {
     display: flex;
     align-items: center;
@@ -125,11 +50,26 @@
     margin-left: 16px;
     cursor: pointer;
     padding: 3px 3px 0;
-    font-size: 2.6rem;
+    position: relative;
+    color: #161823;
+}
+
+.badge {
+    position: absolute;
+    top: -4px;
+    right: 0px;
+    padding: 0px 6px;
+    line-height: 2rem;
+    border-radius: 10px;
+    font-weight: 600;
+    color: var(--white);
+    font-family: var(--font-family);
+    background-color: var(--primary);
+    font-size: 1.4rem;
+    height: 2rem;
 }
 
 .userr-avartar {
-    // background-image: url(https://p16-sign-va.tiktokcdn.com/tos-useast2a-avt-0068-giso/a6fc69440ecd6e4e86b8ef977e75c1c0~c5_720x720.jpeg?x-expires=1672477200&x-signature=cwq%2FsdXsLKrcU39vP4td6RXkvS4%3D);
     margin-left: 16px;
     padding: 3px 3px 0;
     width: 38px;
@@ -138,6 +78,6 @@
 }
 
 .user-avartar {
-   border-radius: 50%;
-   background-size: cover;
+    border-radius: 50%;
+    background-size: cover;
 }

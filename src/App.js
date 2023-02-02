@@ -12,11 +12,11 @@ function App() {
                         const Page = cur.component;
 
                         //logic layout
-                        let Layout = DefaulLayout
-                        if(cur.layout) {
-                            Layout = cur.layout
-                        } else if(cur.layout === null) {
-                            Layout = Fragment
+                        let Layout = DefaulLayout;
+                        if (cur.layout) {
+                            Layout = cur.layout;
+                        } else if (cur.layout === null) {
+                            Layout = Fragment;
                         }
 
                         return (
